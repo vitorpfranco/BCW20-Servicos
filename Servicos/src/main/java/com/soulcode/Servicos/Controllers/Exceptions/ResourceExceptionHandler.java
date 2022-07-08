@@ -4,6 +4,7 @@ import com.soulcode.Servicos.Services.Exceptions.DataIntegrityViolationException
 import com.soulcode.Servicos.Services.Exceptions.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -14,7 +15,7 @@ import java.time.Instant;
 public class ResourceExceptionHandler {
 
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<StandardError> entityNotFound(EntityNotFoundException e, HttpServletRequest request){
+    public ResponseEntity<StandardError> entityNotFound(EntityNotFoundException e, HttpServletRequest request) {
         StandardError erro = new StandardError();
         erro.setTimestamp(Instant.now());
         erro.setStatus(HttpStatus.NOT_FOUND.value());
@@ -25,7 +26,7 @@ public class ResourceExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
     }
 
-    public ResponseEntity<StandardError> dataIntegrityViolationException(DataIntegrityViolationException e,HttpServletRequest request ){
+    public ResponseEntity<StandardError> dataIntegrityViolationException(DataIntegrityViolationException e, HttpServletRequest request) {
         StandardError erro = new StandardError();
         erro.setTimestamp(Instant.now());
         erro.setStatus(HttpStatus.CONFLICT.value());
@@ -35,5 +36,4 @@ public class ResourceExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.CONFLICT).body(erro);
     }
-
 }

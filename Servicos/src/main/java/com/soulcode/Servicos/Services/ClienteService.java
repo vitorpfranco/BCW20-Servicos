@@ -3,6 +3,7 @@ package com.soulcode.Servicos.Services;
 import com.soulcode.Servicos.Models.Cliente;
 import com.soulcode.Servicos.Repositories.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,7 +16,8 @@ public class ClienteService {
     ClienteRepository clienteRepository;
 
     // findAll (método da Spring Data) - busca todos os registros
-    public List<Cliente> mostrarTodosClientes(){
+    @Cacheable("clientesCache")
+    public List<Cliente> mostrarTodosClientes() {
         return clienteRepository.findAll();
     }
 
@@ -33,13 +35,13 @@ public class ClienteService {
     }
 
     // editar um cliente já cadastrado
-    public Cliente editarCliente (Cliente cliente) {
+    public Cliente editarCliente(Cliente cliente) {
         mostrarUmCliente(cliente.getIdCliente());
         return clienteRepository.save(cliente);
     }
 
     // deleteById  - excluir um cliente pelo seu id
-    public void excluirCliente (Integer idCliente) {
+    public void excluirCliente(Integer idCliente) {
         mostrarUmCliente(idCliente);
         clienteRepository.deleteById(idCliente);
     }
