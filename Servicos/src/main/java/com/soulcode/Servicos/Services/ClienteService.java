@@ -3,6 +3,8 @@ package com.soulcode.Servicos.Services;
 import com.soulcode.Servicos.Models.Cliente;
 import com.soulcode.Servicos.Repositories.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +24,7 @@ public class ClienteService {
     }
 
     // findById - busca um cliente específico pelo seu id
+    @Cacheable(value = "clientesCache", key = "#idCliente")
     public Cliente mostrarUmCliente(Integer idCliente) {
         Optional<Cliente> cliente = clienteRepository.findById(idCliente);
         return cliente.orElseThrow();
@@ -31,16 +34,17 @@ public class ClienteService {
         //por precaução vamos limpar o campo de id do cliente
         cliente.setIdCliente(null);
         return clienteRepository.save(cliente);
-
     }
 
     // editar um cliente já cadastrado
+    @CachePut(value = "clientesCache", key = "#cliente.idCliente", unless = "#result == null")
     public Cliente editarCliente(Cliente cliente) {
         mostrarUmCliente(cliente.getIdCliente());
         return clienteRepository.save(cliente);
     }
 
     // deleteById  - excluir um cliente pelo seu id
+    @CacheEvict(value = "clientesCache", key = "#idCliente") // Apaga do cache o registro com esta key
     public void excluirCliente(Integer idCliente) {
         mostrarUmCliente(idCliente);
         clienteRepository.deleteById(idCliente);

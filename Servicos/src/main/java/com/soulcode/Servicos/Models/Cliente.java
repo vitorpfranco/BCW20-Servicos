@@ -23,7 +23,7 @@ public class Cliente {
     private List<Chamado> chamados = new ArrayList<>();
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_endereco", unique=true)
+    @JoinColumn(name = "id_endereco", unique = true)
     private EnderecoCliente enderecoCliente;
 
 
