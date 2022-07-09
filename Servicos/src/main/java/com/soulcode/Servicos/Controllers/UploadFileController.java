@@ -20,14 +20,14 @@ public class UploadFileController {
     @PostMapping("/funcionarios/envioFoto/{idFuncionario}")
     public ResponseEntity<Void> enviarFoto(@PathVariable Integer idFuncionario,
                                            MultipartFile file,
-                                           @RequestParam("nome") String nome){
+                                           @RequestParam("nome") String nome) {
 
         String fileName = nome;
         String uploadDir = "/home/tatiana/Downloads/fotoFunc";
         String nomeMaisCaminho = "/home/tatiana/Downloads/fotoFunc/" + nome;
 
 
-        try{
+        try {
             UploadFile.saveFile(uploadDir, fileName, file);
             funcionarioService.salvarFoto(idFuncionario, nomeMaisCaminho);
         } catch (IOException e) {
