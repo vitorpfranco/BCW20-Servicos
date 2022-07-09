@@ -1,6 +1,7 @@
 package com.soulcode.Servicos.Controllers.Exceptions;
 
 import com.soulcode.Servicos.Services.Exceptions.DataIntegrityViolationException;
+import com.soulcode.Servicos.Services.Exceptions.EmailSendingFailedException;
 import com.soulcode.Servicos.Services.Exceptions.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,5 +36,17 @@ public class ResourceExceptionHandler {
         erro.setPath(request.getRequestURI());
 
         return ResponseEntity.status(HttpStatus.CONFLICT).body(erro);
+    }
+
+    @ExceptionHandler(EmailSendingFailedException.class)
+    public ResponseEntity<StandardError> emailSendingFailedException(EmailSendingFailedException e, HttpServletRequest request) {
+        StandardError erro = new StandardError();
+        erro.setTimestamp(Instant.now());
+        erro.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+        erro.setError("Erro ao enviar email");
+        erro.setMessage(e.getMessage());
+        erro.setPath(request.getRequestURI());
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(erro);
     }
 }
