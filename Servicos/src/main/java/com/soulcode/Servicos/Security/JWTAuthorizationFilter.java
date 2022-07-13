@@ -32,6 +32,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
                 // Essa informação pode ser utilizada dentro dos controllers da aplicação
             }
         }
+        chain.doFilter(request, response);
     }
 
     public UsernamePasswordAuthenticationToken getAuthentication(String token) {
