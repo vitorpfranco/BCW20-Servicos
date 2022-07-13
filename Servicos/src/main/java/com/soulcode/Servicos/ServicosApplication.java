@@ -12,9 +12,4 @@ public class ServicosApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ServicosApplication.class, args);
 	}
-
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
 }
