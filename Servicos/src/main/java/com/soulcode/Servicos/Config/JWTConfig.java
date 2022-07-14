@@ -46,16 +46,17 @@ public class JWTConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
-    @Bean
+    @Bean // CROSS ORIGIN RESOURCE SHARING
     CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
+        CorsConfiguration configuration = new CorsConfiguration(); // configurações padrões
         configuration.setAllowedMethods(List.of(
                 HttpMethod.GET.name(),
                 HttpMethod.PUT.name(),
                 HttpMethod.POST.name(),
                 HttpMethod.DELETE.name()
-        ));
+        )); // métodos permitidos para o front acessar
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        // endpoints permitidos para o front acessar
         source.registerCorsConfiguration("/**", configuration.applyPermitDefaultValues());
         return source;
     }
