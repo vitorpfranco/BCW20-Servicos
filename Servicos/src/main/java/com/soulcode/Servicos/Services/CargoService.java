@@ -11,7 +11,10 @@ import java.util.Optional;
 @Service
 public class CargoService {
 
-    @Autowired
+    public CargoService(CargoRepository cargoRepository) {
+        this.cargoRepository = cargoRepository;
+    }
+
     CargoRepository cargoRepository;
 
     // primeiro serviço: mostrar todos os cargos cadastrados
