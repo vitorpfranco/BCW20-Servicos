@@ -20,6 +20,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
 
+// Agrega todas as informações de segurança http, e gerência do user.
 @EnableWebSecurity
 public class JWTConfig extends WebSecurityConfigurerAdapter {
     @Autowired
@@ -30,23 +31,31 @@ public class JWTConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        // UserDetailsService -> carregar o usuário do banco
+        // BCrypt -> gerador de hash de senhas
+        // Usa passwordEncoder() para comparar senhas de login
         auth.userDetailsService(userDetailService).passwordEncoder(passwordEncoder());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        // habilita o cors e desabilita o csrf
         http.cors().and().csrf().disable();
+        // JWTAuthenticationFilter é chamado quando uso /login
         http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtils));
         http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtils));
 
-        http.authorizeRequests()
+        http.authorizeRequests() // autoriza requisições
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
+//                .antMatchers(HttpMethod.GET, "/servicos/**").permitAll() // ** representa qualquer possibilidade
                 .anyRequest().authenticated();
 
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
-    @Bean // CROSS ORIGIN RESOURCE SHARING
+    // TODO: explicação do restante e do Redis Cache
+    @Bean
+        // CROSS ORIGIN RESOURCE SHARING
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration(); // configurações padrões
         configuration.setAllowedMethods(List.of(
