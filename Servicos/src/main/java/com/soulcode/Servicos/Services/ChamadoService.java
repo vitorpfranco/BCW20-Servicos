@@ -8,6 +8,7 @@ import com.soulcode.Servicos.Repositories.ChamadoRepository;
 import com.soulcode.Servicos.Repositories.ClienteRepository;
 import com.soulcode.Servicos.Repositories.FuncionarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -51,6 +52,7 @@ public class ChamadoService {
         return chamadoRepository.findByStatus(status);
     }
 
+    @Cacheable(value = "chamadosCache", key = "T(java.util.Objects).hash(#data1, #data2)")
     public List<Chamado> buscarPorIntervaloData(Date data1, Date data2){
         return chamadoRepository.findByIntervaloData(data1,data2);
     }
