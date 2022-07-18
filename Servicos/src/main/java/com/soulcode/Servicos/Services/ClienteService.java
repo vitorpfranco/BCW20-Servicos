@@ -30,11 +30,11 @@ public class ClienteService {
         return cliente.orElseThrow();
     }
 
+    @CachePut(value = "clientesCache", key = "#cliente.idCliente")
     public Cliente inserirCliente(Cliente cliente) {
         //por precaução vamos limpar o campo de id do cliente
         cliente.setIdCliente(null);
         return clienteRepository.save(cliente);
-
     }
 
     // editar um cliente já cadastrado
@@ -42,7 +42,7 @@ public class ClienteService {
     @CachePut(value = "clientesCache", key = "#cliente.idCliente") //SPEL
     public Cliente editarCliente(Cliente cliente) {
         mostrarUmCliente(cliente.getIdCliente());
-        return clienteRepository.save(cliente);
+        return clienteRepository.save(cliente); // FAZ O CACHE DESSE RETORNO
     }
 
     // deleteById  - excluir um cliente pelo seu id

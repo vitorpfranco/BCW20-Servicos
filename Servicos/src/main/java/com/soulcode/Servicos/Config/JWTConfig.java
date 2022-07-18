@@ -55,10 +55,10 @@ public class JWTConfig extends WebSecurityConfigurerAdapter {
 
     // TODO: explicação do restante e do Redis Cache
     @Bean
-        // CROSS ORIGIN RESOURCE SHARING
-    CorsConfigurationSource corsConfigurationSource() {
+    // CROSS ORIGIN RESOURCE SHARING
+    CorsConfigurationSource corsConfigurationSource() { // configuração global de CORS
         CorsConfiguration configuration = new CorsConfiguration(); // configurações padrões
-        configuration.setAllowedMethods(List.of(
+        configuration.setAllowedMethods(List.of(// quais métodos estão liberados via CORS?
                 HttpMethod.GET.name(),
                 HttpMethod.PUT.name(),
                 HttpMethod.POST.name(),
@@ -69,6 +69,7 @@ public class JWTConfig extends WebSecurityConfigurerAdapter {
         source.registerCorsConfiguration("/**", configuration.applyPermitDefaultValues());
         return source;
     }
+    // "/servicos/funcionarios" -> "/**" -> TODOS OS ENDPOINTS
 
     @Bean
     public PasswordEncoder passwordEncoder() {

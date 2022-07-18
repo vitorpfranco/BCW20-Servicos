@@ -3,6 +3,7 @@ package com.soulcode.Servicos.Services;
 import com.soulcode.Servicos.Models.Cargo;
 import com.soulcode.Servicos.Repositories.CargoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +16,7 @@ public class CargoService {
     CargoRepository cargoRepository;
 
     // primeiro serviço: mostrar todos os cargos cadastrados
+    @Cacheable("cargosCache")
     public List<Cargo> mostrarTodosCargos(){
         return cargoRepository.findAll();
     }

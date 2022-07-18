@@ -1,8 +1,5 @@
 package com.soulcode.Servicos.Config;
 
-import com.soulcode.Servicos.Repositories.CargoRepository;
-import com.soulcode.Servicos.Services.CargoService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.cache.RedisCacheManagerBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,7 +15,7 @@ public class CacheConfig {
     private final RedisSerializationContext.SerializationPair<Object> serializationPair = RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer());
 
     @Bean
-    public RedisCacheConfiguration cacheConfiguration() {
+    public RedisCacheConfiguration cacheConfiguration() {// customizar a config padrão do redis cache
         return RedisCacheConfiguration
                 .defaultCacheConfig() // customizar informações padrões
                 .entryTtl(Duration.ofMinutes(5)) // todos os caches terão 5 min por padrão (tempo de vida)
