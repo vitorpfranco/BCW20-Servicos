@@ -1,10 +1,12 @@
 package com.soulcode.Servicos.Repositories;
 
 import com.soulcode.Servicos.Models.Chamado;
+import com.soulcode.Servicos.Models.ChamadoGroup;
 import com.soulcode.Servicos.Models.Cliente;
 import com.soulcode.Servicos.Models.Funcionario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import reactor.util.function.Tuple2;
 
 import java.util.Date;
 import java.util.List;
@@ -22,4 +24,7 @@ public interface ChamadoRepository extends JpaRepository<Chamado,Integer> {
     @Query(value="SELECT * FROM chamado WHERE data_entrada BETWEEN :data1 AND :data2", nativeQuery = true)
     List<Chamado> findByIntervaloData(Date data1, Date data2);
 
+    @Query(value = "SELECT new com.soulcode.Servicos.Models.ChamadoGroup(C.status, COUNT(C.idChamado)) from Chamado C GROUP BY C.status")
+    List<ChamadoGroup> groupByStatus();
 }
+

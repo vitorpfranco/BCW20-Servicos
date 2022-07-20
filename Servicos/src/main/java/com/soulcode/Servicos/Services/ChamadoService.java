@@ -1,19 +1,15 @@
 package com.soulcode.Servicos.Services;
 
-import com.soulcode.Servicos.Models.Chamado;
-import com.soulcode.Servicos.Models.Cliente;
-import com.soulcode.Servicos.Models.Funcionario;
-import com.soulcode.Servicos.Models.StatusChamado;
+import com.soulcode.Servicos.Models.*;
 import com.soulcode.Servicos.Repositories.ChamadoRepository;
 import com.soulcode.Servicos.Repositories.ClienteRepository;
 import com.soulcode.Servicos.Repositories.FuncionarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import reactor.util.function.Tuple2;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class ChamadoService {
@@ -28,8 +24,9 @@ public class ChamadoService {
     FuncionarioRepository funcionarioRepository;
 
     // findAll (método da Spring Data) - busca todos os registros
-    public List<Chamado> mostrarTodosChamados(){
-        return chamadoRepository.findAll();	}
+    public List<Chamado> mostrarTodosChamados() {
+        return chamadoRepository.findAll();
+    }
 
     // findById - busca um registro pela sua chave primária
     public Chamado mostrarUmChamado(Integer idChamado) {
@@ -37,24 +34,24 @@ public class ChamadoService {
         return chamado.orElseThrow();
     }
 
-    public List<Chamado> buscarChamadosPeloCliente(Integer idCliente){
+    public List<Chamado> buscarChamadosPeloCliente(Integer idCliente) {
         Optional<Cliente> cliente = clienteRepository.findById(idCliente);
         return chamadoRepository.findByCliente(cliente);
 
     }
 
-    public List<Chamado> buscarChamadosPeloFuncionario(Integer idFuncionario){
+    public List<Chamado> buscarChamadosPeloFuncionario(Integer idFuncionario) {
         Optional<Funcionario> funcionario = funcionarioRepository.findById(idFuncionario);
         return chamadoRepository.findByFuncionario(funcionario);
     }
 
-    public List<Chamado> buscarChamadosPeloStatus(String status){
+    public List<Chamado> buscarChamadosPeloStatus(String status) {
         return chamadoRepository.findByStatus(status);
     }
 
     @Cacheable(value = "chamadosCache", key = "T(java.util.Objects).hash(#data1, #data2)")
-    public List<Chamado> buscarPorIntervaloData(Date data1, Date data2){
-        return chamadoRepository.findByIntervaloData(data1,data2);
+    public List<Chamado> buscarPorIntervaloData(Date data1, Date data2) {
+        return chamadoRepository.findByIntervaloData(data1, data2);
     }
 
     //cadastrar um novo chamado
@@ -65,7 +62,7 @@ public class ChamadoService {
     //          3) no momento do cadastro do chamado, o status desse chamado deve ser RECEBIDO
 
     //serviço para cadastro de novo chamado
-    public Chamado cadastrarChamado(Chamado chamado, Integer idCliente){
+    public Chamado cadastrarChamado(Chamado chamado, Integer idCliente) {
         // regra 3 - atribuuição do status recebido pra o chamado que está sendo cadastrado
         chamado.setStatus(StatusChamado.RECEBIDO);
         // regra 2 - dizer que ainda não atribuimos esse chamado pra nenhum funcionário
@@ -77,14 +74,14 @@ public class ChamadoService {
     }
 
     // Método para exclusão de um chamado
-    public void excluirChamado(Integer idChamado){
+    public void excluirChamado(Integer idChamado) {
         chamadoRepository.deleteById(idChamado);
     }
 
     //Método para editar um chamado
     // no momento da edição de um chamado devemos preservar o cliente e o funcionário desse chamado
     // vamos editar os dados do chamado, mas contiuamos com os dados do cliente e os dados do funcionário
-    public Chamado editarChamado(Chamado chamado, Integer idChamado){
+    public Chamado editarChamado(Chamado chamado, Integer idChamado) {
         //instanciamos aqui um objeto do tipo Chamado para guardar os dados do chamados
         //sem as novas alteracoes
         Chamado chamadoSemAsNovasAlteracoes = mostrarUmChamado(idChamado);
@@ -100,7 +97,7 @@ public class ChamadoService {
     // ou trocar o funcionário de determinado chamado
     // -> regra -> no momento em que um determinado chamado é atribuído a um funcionário
     //             o status do chamado precisa ser alterado para ATRIBUIDO
-    public Chamado atribuirFuncionario(Integer idChamado, Integer idFuncionario){
+    public Chamado atribuirFuncionario(Integer idChamado, Integer idFuncionario) {
         // buscar os dados do funcionário que vai ser atibuído a esse chamado
         Optional<Funcionario> funcionario = funcionarioRepository.findById(idFuncionario);
         // buscar o chamado para o qual vai ser especificado o funcionário escolhido
@@ -112,26 +109,22 @@ public class ChamadoService {
     }
 
     //método para modificar o status de um chamado
-    public Chamado modificarStatus(Integer idChamado,String status){
+    public Chamado modificarStatus(Integer idChamado, String status) {
         Chamado chamado = mostrarUmChamado(idChamado);
-        switch (status){
-            case "ATRIBUIDO":
-            {
+        switch (status) {
+            case "ATRIBUIDO": {
                 chamado.setStatus(StatusChamado.ATRIBUIDO);
                 break;
             }
-            case "CONCLUIDO":
-            {
+            case "CONCLUIDO": {
                 chamado.setStatus(StatusChamado.CONCLUIDO);
                 break;
             }
-            case "ARQUIVADO":
-            {
+            case "ARQUIVADO": {
                 chamado.setStatus(StatusChamado.ARQUIVADO);
                 break;
             }
-            case "RECEBIDO":
-            {
+            case "RECEBIDO": {
                 chamado.setStatus(StatusChamado.RECEBIDO);
                 break;
             }
@@ -139,5 +132,8 @@ public class ChamadoService {
         return chamadoRepository.save(chamado);
     }
 
+    public List<ChamadoGroup> groupByStatus() {
+        return chamadoRepository.groupByStatus();
+    }
 
 }
