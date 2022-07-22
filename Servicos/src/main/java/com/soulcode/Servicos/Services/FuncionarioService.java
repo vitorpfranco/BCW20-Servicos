@@ -1,6 +1,7 @@
 package com.soulcode.Servicos.Services;
 
 import com.soulcode.Servicos.Models.Cargo;
+import com.soulcode.Servicos.Models.Chamado;
 import com.soulcode.Servicos.Models.Funcionario;
 import com.soulcode.Servicos.Repositories.CargoRepository;
 import com.soulcode.Servicos.Repositories.FuncionarioRepository;
@@ -36,6 +37,9 @@ public class FuncionarioService {
         return funcionarioRepository.findAll();
     }
 
+    public List<Funcionario> mostrarFuncionariosSemChamado(){
+        return funcionarioRepository.findFuncSemChamado();
+    }
 
     //vamos mais um serviço relacionado ao funcionário
     //criar um serviço de buscar apenas um funcionário pelo seu id(chave primária)
