@@ -53,7 +53,7 @@ public class ChamadoService {
         Optional<Funcionario> funcionario = funcionarioRepository.findById(idFuncionario);
         return chamadoRepository.findByFuncionario(funcionario);
     }
-    @Cacheable("chamadosCache")
+    @Cacheable(value = "chamadosCache", key = "#status")
     public List<Chamado> buscarChamadosPeloStatus(String status){
         return chamadoRepository.findByStatus(status);
     }
@@ -84,7 +84,7 @@ public class ChamadoService {
     }
 
     // Método para exclusão de um chamado
-    @CacheEvict(value = "chamadoCache", key = "#idChamado")
+    @CacheEvict(value = "chamadoCache", key = "#idChamado", allEntries = true)
     public void excluirChamado(Integer idChamado){
         chamadoRepository.deleteById(idChamado);
     }

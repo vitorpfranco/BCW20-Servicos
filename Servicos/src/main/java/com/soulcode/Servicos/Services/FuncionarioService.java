@@ -48,7 +48,7 @@ public class FuncionarioService {
     }
 
     //vamos criar mais um serviço pra buscar um funcionário pelo seu email
-    @Cacheable(value = "funcionariosCache")
+    @Cacheable(value = "funcionariosCache", key = "#email")
     public Funcionario mostrarUmFuncionarioPeloEmail(String email){
         Optional<Funcionario> funcionario = funcionarioRepository.findByEmail(email);
         return funcionario.orElseThrow();
@@ -61,7 +61,7 @@ public class FuncionarioService {
     }
 
     //vamos criar um serviço para cadastrar um novo funcionário
-    @CachePut(value = "funcionariosCache", key = "#funcionario.idFuncionario")
+    @CachePut(value = "funcionariosCache", key = "#funcionario.idFuncionario") //Chaves tudo ao final
     public Funcionario cadastrarFuncionario(Funcionario funcionario, Integer idCargo) throws DataIntegrityViolationException {
         //só por precaução nós vamos colocar o id do funcionário como nullo
         funcionario.setIdFuncionario(null);
@@ -79,7 +79,7 @@ public class FuncionarioService {
         return funcionarioRepository.save(funcionario);
     }
 
-    @CachePut(value = "funcionariosCache")
+   
     public Funcionario salvarFoto(Integer idFuncionario, String caminhoFoto){
         Funcionario funcionario = mostrarUmFuncionarioPeloId(idFuncionario);
         funcionario.setFoto(caminhoFoto);
