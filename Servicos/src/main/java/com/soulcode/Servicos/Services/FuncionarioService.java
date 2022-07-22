@@ -30,6 +30,7 @@ public class FuncionarioService {
     //primeiro serviço na tabela de funcionário vai ser a leitura de todos
     //os funcionários cadastrados
     //findAll -> método do spring Data JPA -> busca todos os registros de uma tabela
+    @Cacheable("funcionariosCache")
     public List<Funcionario> mostrarTodosFuncionarios(){
 
         return funcionarioRepository.findAll();
@@ -39,6 +40,7 @@ public class FuncionarioService {
     //vamos mais um serviço relacionado ao funcionário
     //criar um serviço de buscar apenas um funcionário pelo seu id(chave primária)
 
+    @Cacheable(value = "funcionariosCache", key = "#idFuncionario")
     public Funcionario mostrarUmFuncionarioPeloId(Integer idFuncionario)
     {
         Optional<Funcionario> funcionario = funcionarioRepository.findById(idFuncionario);
