@@ -58,6 +58,12 @@ public class ChamadoController {
         return chamados;
     }
 
+    @GetMapping("/chamadosPagamentoQuitado")
+    public List<Chamado> buscarChamadosPeloPagamentoStatusQuitado(){
+        List<Chamado> chamados = chamadoService.buscarChamadosPeloPagamentoStatusQuitado();
+        return chamados;
+    }
+
     // aqui vamos definir o endpoint para o serviço de cadastro de um novo chamado
     // para cadastro precisamos anotar como método http - post
     @PostMapping("/chamados/{idCliente}")
