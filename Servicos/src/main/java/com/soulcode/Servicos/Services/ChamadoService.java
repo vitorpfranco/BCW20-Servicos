@@ -45,7 +45,10 @@ public class ChamadoService {
     public List<Chamado> buscarChamadosPeloCliente(Integer idCliente){
         Optional<Cliente> cliente = clienteRepository.findById(idCliente);
         return chamadoRepository.findByCliente(cliente);
+    }
 
+    public List<Chamado> buscarChamadosPeloPagamentoStatusQuitado(){
+        return chamadoRepository.findByStatusQuitado();
     }
 
     @Cacheable(value = "chamadosCache", key = "#Funcionario.idFuncionario")
