@@ -18,6 +18,12 @@ public class FuncionarioController {
     @Autowired
     FuncionarioService funcionarioService;
 
+    @GetMapping("/funcionarios/semChamado")
+    public List<Funcionario> mostrarFuncionariosSemChamado(){
+        List<Funcionario> funcionarios = funcionarioService.mostrarFuncionariosSemChamado();
+        return funcionarios;
+    }
+
     @GetMapping("/funcionarios")
     public List<Funcionario> mostrarTodosFuncionarios(){
         List<Funcionario> funcionarios = funcionarioService.mostrarTodosFuncionarios();
