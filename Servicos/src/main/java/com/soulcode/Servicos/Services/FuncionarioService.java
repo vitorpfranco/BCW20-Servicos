@@ -7,6 +7,9 @@ import com.soulcode.Servicos.Repositories.FuncionarioRepository;
 import com.soulcode.Servicos.Services.Exceptions.DataIntegrityViolationException;
 import com.soulcode.Servicos.Services.Exceptions.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -45,17 +48,20 @@ public class FuncionarioService {
     }
 
     //vamos criar mais um serviço pra buscar um funcionário pelo seu email
+    @Cacheable(value = "funcionariosCache", key = "#email")
     public Funcionario mostrarUmFuncionarioPeloEmail(String email){
         Optional<Funcionario> funcionario = funcionarioRepository.findByEmail(email);
         return funcionario.orElseThrow();
     }
 
+    @Cacheable(value = "funcionariosCache", key = "#idCargo")
     public List<Funcionario> mostrarTodosFuncionariosDeUmCargo(Integer idCargo){
         Optional<Cargo> cargo = cargoRepository.findById(idCargo);
         return funcionarioRepository.findByCargo(cargo);
     }
 
     //vamos criar um serviço para cadastrar um novo funcionário
+    @CachePut(value = "funcionariosCache", key = "#funcionario.idFuncionario") //Chaves tudo ao final
     public Funcionario cadastrarFuncionario(Funcionario funcionario, Integer idCargo) throws DataIntegrityViolationException {
         //só por precaução nós vamos colocar o id do funcionário como nullo
         funcionario.setIdFuncionario(null);
@@ -63,15 +69,17 @@ public class FuncionarioService {
         funcionario.setCargo(cargo.get());
         return funcionarioRepository.save(funcionario);
     }
-
+@CacheEvict(value = "funcionariosCache", key = "#idFuncionario", allEntries = true)
     public void excluirFuncionario(Integer idFuncionario){
         //mostrarUmFuncionarioPeloId(idFuncionario);
         funcionarioRepository.deleteById(idFuncionario);
     }
+    @CachePut(value = "funcionariosCache", key = "#funcionario.idFuncionario")
     public Funcionario editarFuncionario(Funcionario funcionario){
         return funcionarioRepository.save(funcionario);
     }
 
+   
     public Funcionario salvarFoto(Integer idFuncionario, String caminhoFoto){
         Funcionario funcionario = mostrarUmFuncionarioPeloId(idFuncionario);
         funcionario.setFoto(caminhoFoto);
