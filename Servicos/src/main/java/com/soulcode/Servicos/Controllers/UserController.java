@@ -5,6 +5,8 @@ import com.soulcode.Servicos.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,5 +32,14 @@ public class UserController {
         user.setPassword(senhaCodificada);
         user = userService.cadastrar(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
+    }
+
+    @PatchMapping("/usuarios/alterarsenha/{login}")
+    public ResponseEntity<User> alterarSenha(@PathVariable String login,
+                                             @RequestParam("password") String password,
+                                             @RequestHeader("Authorization") String headers){
+        String senhaCodificada = passwordEncoder.encode(password);
+        userService.alterarSenha(senhaCodificada, login, headers);
+        return ResponseEntity.ok().build();
     }
 }
