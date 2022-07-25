@@ -36,10 +36,10 @@ public class FuncionarioController {
         return ResponseEntity.ok().body(funcionario);
     }
 
-    @GetMapping("/funcionarios/porCargo")
-    public List<List> mostrarFuncionariosPorCargo(@RequestParam("cargo")Integer cargo){
-        List lista = funcionarioService.mostrarFuncionariosPorCargo(cargo);
-        return lista;
+    @GetMapping("/funcionarios/porCargo/{idCargo}")
+    public List<Object> mostrarFuncionariosPorCargo(@PathVariable Integer idCargo){
+        List<Object> funcionarios = funcionarioService.mostrarFuncionariosPorCargo(idCargo);
+        return funcionarios;
     }
 
     @GetMapping("/funcionariosEmail/{email}")
