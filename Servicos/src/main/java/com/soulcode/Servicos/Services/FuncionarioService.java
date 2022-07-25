@@ -37,6 +37,10 @@ public class FuncionarioService {
         return funcionarioRepository.findAll();
     }
 
+    public List<List> mostrarFuncionariosPorCargo(Integer cargo){
+        return funcionarioRepository.qtdFuncPorCargo(cargo);
+    }
+
     public List<Funcionario> mostrarFuncionariosSemChamado(){
         return funcionarioRepository.findFuncSemChamado();
     }

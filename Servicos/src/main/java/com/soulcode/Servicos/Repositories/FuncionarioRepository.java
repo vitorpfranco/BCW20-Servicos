@@ -23,4 +23,9 @@ public interface FuncionarioRepository extends JpaRepository<Funcionario, Intege
             "WHERE chamado.id_funcionario IS NULL",nativeQuery = true )
     List<Funcionario> findFuncSemChamado();
 
+    @Query(value = "SELECT count(id_cargo)\n" +
+            "FROM funcionario\n" +
+            "WHERE id_cargo = :cargo", nativeQuery = true)
+    List<List> qtdFuncPorCargo(Integer cargo);
+
 }

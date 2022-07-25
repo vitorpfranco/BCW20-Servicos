@@ -36,6 +36,12 @@ public class FuncionarioController {
         return ResponseEntity.ok().body(funcionario);
     }
 
+    @GetMapping("/funcionarios/porCargo")
+    public List<List> mostrarFuncionariosPorCargo(@RequestParam("cargo")Integer cargo){
+        List lista = funcionarioService.mostrarFuncionariosPorCargo(cargo);
+        return lista;
+    }
+
     @GetMapping("/funcionariosEmail/{email}")
     public ResponseEntity<Funcionario> mostrarUmFuncionarioPeloEmail(@PathVariable String email){
         Funcionario funcionario = funcionarioService.mostrarUmFuncionarioPeloEmail(email);
