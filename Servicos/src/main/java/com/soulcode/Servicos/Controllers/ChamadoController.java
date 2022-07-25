@@ -58,6 +58,12 @@ public class ChamadoController {
         return chamados;
     }
 
+    @GetMapping("/chamados/qtdPorStatus")
+    public List<Object> buscarQtdChamadosPorStatus(){
+        List<Object> chamados = chamadoService.buscarQtdChamadosPorStatus();
+        return chamados;
+    }
+
     @GetMapping("/chamadosPagamentoQuitado")
     public List<Chamado> buscarChamadosPeloPagamentoStatusQuitado(){
         List<Chamado> chamados = chamadoService.buscarChamadosPeloPagamentoStatusQuitado();
