@@ -88,13 +88,33 @@ public class ChamadoService {
 
     @CachePut(value = "chamadoCache", key = "#idChamado")
     public Chamado editarChamado(Chamado chamado, Integer idChamado){
+        Chamado chamadoantigo=mostrarUmChamado(idChamado);
+        chamado.setDataEntrada(chamadoantigo.getDataEntrada());
+        chamado.setCliente(chamadoantigo.getCliente());
+        chamado.setPagamento(chamadoantigo.getPagamento());
+        switch (chamado.getStatus().toString()){
+            case "ATRIBUIDO":
+            {
+                chamado.setStatus(StatusChamado.ATRIBUIDO);
+                break;
+            }
+            case "CONCLUIDO":
+            {
+                chamado.setStatus(StatusChamado.CONCLUIDO);
+                break;
+            }
+            case "ARQUIVADO":
+            {
+                chamado.setStatus(StatusChamado.ARQUIVADO);
+                break;
+            }
+            case "RECEBIDO":
+            {
+                chamado.setStatus(StatusChamado.RECEBIDO);
+                break;
+            }
+        }
 
-        Chamado chamadoSemAsNovasAlteracoes = mostrarUmChamado(idChamado);
-        Funcionario funcionario = chamadoSemAsNovasAlteracoes.getFuncionario();
-        Cliente cliente = chamadoSemAsNovasAlteracoes.getCliente();
-
-        chamado.setCliente(cliente);
-        chamado.setFuncionario(funcionario);
         return chamadoRepository.save(chamado);
     }
 
