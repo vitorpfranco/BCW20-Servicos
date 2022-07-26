@@ -21,11 +21,9 @@ public class UploadFileController {
     public ResponseEntity<Void> enviarFoto(@PathVariable Integer idFuncionario,
                                            MultipartFile file,
                                            @RequestParam("nome") String nome){
-
         String fileName = nome;
         String uploadDir = "/home/tatiana/Downloads/fotoFunc";
         String nomeMaisCaminho = "/home/tatiana/Downloads/fotoFunc/" + nome;
-
 
         try{
             UploadFile.saveFile(uploadDir, fileName, file);

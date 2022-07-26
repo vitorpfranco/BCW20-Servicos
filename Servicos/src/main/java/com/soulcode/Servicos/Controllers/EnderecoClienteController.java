@@ -2,7 +2,6 @@ package com.soulcode.Servicos.Controllers;
 
 import com.soulcode.Servicos.Models.EnderecoCliente;
 import com.soulcode.Servicos.Services.EnderecoClienteService;
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -43,7 +42,6 @@ public class EnderecoClienteController {
         }catch (Exception e){
             return ResponseEntity.badRequest().build();
         }
-
     }
 
     @PutMapping("/enderecoCliente/{idEndereco}")
@@ -53,7 +51,4 @@ public class EnderecoClienteController {
         enderecoClienteService.editarEndereco(enderecoCliente);
         return ResponseEntity.ok().body(enderecoCliente);
     }
-
-
-
 }
