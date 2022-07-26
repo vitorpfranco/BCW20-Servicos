@@ -30,6 +30,6 @@ public interface FuncionarioRepository extends JpaRepository<Funcionario, Intege
 
     @Query(value = "SELECT funcionario.*\n" +
             "FROM funcionario\n" +
-            "WHERE foto IS NULL", nativeQuery = true)
+            "WHERE foto = ''", nativeQuery = true)
     List<Funcionario> funcFotoNull();
 }
