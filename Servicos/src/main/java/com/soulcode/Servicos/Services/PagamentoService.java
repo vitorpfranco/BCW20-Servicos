@@ -47,7 +47,10 @@ public class PagamentoService {
         }else{
             throw new RuntimeException();
         }
+    }
 
+    public List<Object> mostrarPagamentosGroupByStatus(){
+        return pagamentoRepository.qtdPagamentosByStatus();
     }
 
     public Pagamento editarPagamento(Pagamento pagamento){
