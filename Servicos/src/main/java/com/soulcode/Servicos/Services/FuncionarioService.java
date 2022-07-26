@@ -41,6 +41,10 @@ public class FuncionarioService {
         return funcionarioRepository.qtdFuncPorCargo(idCargo);
     }
 
+    public List<Funcionario> mostrarFuncionariosSemFoto(){
+        return funcionarioRepository.funcFotoNull();
+    }
+
     public List<Funcionario> mostrarFuncionariosSemChamado(){
         return funcionarioRepository.findFuncSemChamado();
     }

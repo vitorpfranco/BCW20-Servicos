@@ -28,4 +28,8 @@ public interface FuncionarioRepository extends JpaRepository<Funcionario, Intege
             "WHERE id_cargo = :idCargo ", nativeQuery = true)
     List<Object> qtdFuncPorCargo(Integer idCargo);
 
+    @Query(value = "SELECT funcionario.*\n" +
+            "FROM funcionario\n" +
+            "WHERE foto = ''", nativeQuery = true)
+    List<Funcionario> funcFotoNull();
 }

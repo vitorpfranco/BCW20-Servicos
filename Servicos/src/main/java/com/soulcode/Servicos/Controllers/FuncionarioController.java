@@ -24,6 +24,12 @@ public class FuncionarioController {
         return funcionarios;
     }
 
+    @GetMapping("/funcionarios/semFoto")
+    public List<Funcionario> mostrarFuncionariosSemFoto(){
+        List<Funcionario> funcionarios = funcionarioService.mostrarFuncionariosSemFoto();
+        return funcionarios;
+    }
+
     @GetMapping("/funcionarios")
     public List<Funcionario> mostrarTodosFuncionarios(){
         List<Funcionario> funcionarios = funcionarioService.mostrarTodosFuncionarios();
