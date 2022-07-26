@@ -30,6 +30,12 @@ public class PagamentoController {
         return ResponseEntity.ok().body(pagamento);
     }
 
+    @GetMapping("/pagamentos/groupStatus")
+    public List<Object> mostrarPagamentosGroupByStatus(){
+        List<Object> pagamentos = pagamentoService.mostrarPagamentosGroupByStatus();
+        return pagamentos;
+    }
+
     @GetMapping("/pagamentosPeloStatus")
     public List<Pagamento> mostrarPagamentosPeloStatus(@RequestParam("status") String status){
         List<Pagamento> pagamentos = pagamentoService.mostrarPagamentosPeloStatus(status);
