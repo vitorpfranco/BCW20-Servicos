@@ -2,13 +2,11 @@ package com.soulcode.Servicos.Services;
 
 import com.soulcode.Servicos.Models.User;
 import com.soulcode.Servicos.Repositories.UserRepository;
-import com.soulcode.Servicos.Security.AuthUserDetail;
 import com.soulcode.Servicos.Services.Exceptions.EntityNotFoundException;
 import com.soulcode.Servicos.Util.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 

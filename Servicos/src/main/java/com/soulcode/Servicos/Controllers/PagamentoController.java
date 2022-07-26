@@ -71,6 +71,4 @@ public class PagamentoController {
         pagamentoService.modificarStatusPagamento(idPagamento,status);
         return ResponseEntity.noContent().build();
     }
-
-
 }
