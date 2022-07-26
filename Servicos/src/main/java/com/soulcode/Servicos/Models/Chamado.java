@@ -9,6 +9,7 @@ import java.util.Date;
 public class Chamado {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idChamado;
 
     @Column(nullable = false)

@@ -88,6 +88,7 @@ public class ChamadoService {
         chamado.setStatus(StatusChamado.RECEBIDO);
         // regra 2 - dizer que ainda não atribuimos esse chamado pra nenhum funcionário
         chamado.setFuncionario(null);
+        chamado.setIdChamado(null);
         //regra 1 - buscando os dados do cliente dono do chamado
         Optional<Cliente> cliente = clienteRepository.findById(idCliente);
         chamado.setCliente(cliente.get());
