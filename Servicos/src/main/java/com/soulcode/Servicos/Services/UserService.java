@@ -39,4 +39,19 @@ public class UserService {
         }
             throw new EntityNotFoundException("Usuário não autorizado");
     }
+
+    public User desabilitarUsuario(String login, String headers) {
+
+        if (headers != null && headers.startsWith("Bearer")) {
+            String email = jwtUtils.getLogin((headers.substring(7)));
+            Optional<User> user = userRepository.findByLogin(login);
+
+            if(email.equals(user.get().getLogin())) {
+                user.get().setEnabled(false);
+                return userRepository.save(user.get());
+            }
+        }
+
+        throw new EntityNotFoundException("Usuário não autorizado");
+    }
 }

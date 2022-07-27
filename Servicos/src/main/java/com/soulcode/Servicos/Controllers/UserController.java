@@ -40,4 +40,11 @@ public class UserController {
         userService.alterarSenha(senhaCodificada, login, headers);
         return ResponseEntity.ok().build();
     }
+
+    @PatchMapping("usuarios/desabilitar/{login}")
+    public ResponseEntity<User> desabilitarUsuario(@PathVariable String login,
+                                                   @RequestHeader ("Authorization") String headers) {
+        userService.desabilitarUsuario(login, headers);
+        return ResponseEntity.ok().build();
+    }
 }
