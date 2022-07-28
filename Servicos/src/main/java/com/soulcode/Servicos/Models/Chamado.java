@@ -18,7 +18,6 @@ public class Chamado {
     @Column(nullable = true)
     private String descricao;
 
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
     @Column(columnDefinition = "date", nullable = false)
     private Date dataEntrada;
 

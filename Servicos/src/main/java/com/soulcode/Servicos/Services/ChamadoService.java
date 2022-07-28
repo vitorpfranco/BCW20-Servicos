@@ -81,6 +81,7 @@ public class ChamadoService {
         chamado.setIdChamado(null);
         Optional<Cliente> cliente = clienteRepository.findById(idCliente);
         chamado.setCliente(cliente.get());
+        chamado.setDataEntrada(new Date());
         return chamadoRepository.save(chamado);
     }
 
