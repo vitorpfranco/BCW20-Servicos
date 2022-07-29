@@ -29,4 +29,10 @@ public interface FuncionarioRepository extends JpaRepository<Funcionario, Intege
             "FROM funcionario\n" +
             "WHERE foto = ''", nativeQuery = true)
     List<Funcionario> funcFotoNull();
+
+    @Query(value = "SELECT funcionario.nome, SUM(pagamento.valor)\n" +
+            "FROM chamado JOIN funcionario ON chamado.id_funcionario = funcionario.id_funcionario\n" +
+            "JOIN pagamento ON chamado.id_pagamento = pagamento.id_pagamento\n" +
+            "WHERE chamado.status = 'CONCLUIDO' AND funcionario.nome = :nome \n", nativeQuery = true)
+    List<Object> qtdPagamentoTotalFunc(String nome);
 }
