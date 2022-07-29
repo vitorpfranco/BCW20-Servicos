@@ -42,6 +42,8 @@ public class FuncionarioService {
         return funcionarioRepository.findFuncSemChamado();
     }
 
+    public List<Object> mostrarTotalPagamentoFuncionario(String nome) { return funcionarioRepository.qtdPagamentoTotalFunc(nome); }
+
     @Cacheable(value = "funcionariosCache", key = "#idFuncionario")
     public Funcionario mostrarUmFuncionarioPeloId(Integer idFuncionario)
     {
@@ -86,4 +88,5 @@ public class FuncionarioService {
         funcionario.setFoto(caminhoFoto);
         return funcionarioRepository.save(funcionario);
     }
+
 }

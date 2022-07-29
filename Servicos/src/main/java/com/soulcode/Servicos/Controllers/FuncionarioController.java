@@ -42,6 +42,13 @@ public class FuncionarioController {
         return ResponseEntity.ok().body(funcionario);
     }
 
+    @GetMapping("/funcionarios/qtdPagamento")
+    public List<Object> mostrarTotalPagamentoFuncionario(@RequestParam("nome") String nome){
+        List<Object> totalPagamento = funcionarioService.mostrarTotalPagamentoFuncionario(nome);
+               return totalPagamento;
+    }
+
+
     @GetMapping("/funcionarios/porCargo/{idCargo}")
     public List<Object> mostrarFuncionariosPorCargo(@PathVariable Integer idCargo){
         List<Object> funcionarios = funcionarioService.mostrarFuncionariosPorCargo(idCargo);
