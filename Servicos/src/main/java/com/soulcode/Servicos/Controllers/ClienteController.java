@@ -44,7 +44,7 @@ public class ClienteController {
     public ResponseEntity<Cliente> editarCliente(@PathVariable Integer idCliente, @RequestBody Cliente cliente) {
         cliente.setIdCliente(idCliente);
         cliente = clienteService.editarCliente(cliente);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().body(cliente);
     }
 
     @DeleteMapping("clientes/{idCliente}")

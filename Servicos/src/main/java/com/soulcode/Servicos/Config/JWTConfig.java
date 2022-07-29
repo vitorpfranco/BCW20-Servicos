@@ -47,7 +47,6 @@ public class JWTConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    // CROSS ORIGIN RESOURCE SHARING
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedMethods(List.of(
