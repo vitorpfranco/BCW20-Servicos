@@ -39,4 +39,14 @@ public interface ChamadoRepository extends JpaRepository<Chamado,Integer> {
             "GROUP BY status", nativeQuery = true)
     List<Object> qtdChamadosPorStatus();
 
+    @Query(value = "SELECT funcionario.nome,\n" +
+            "COUNT(CASE WHEN chamado.status = 'ATRIBUIDO' THEN 1 END) AS Atribuido,\n" +
+            "COUNT(CASE WHEN chamado.status = 'CONCLUIDO' THEN 1 END) AS Concluido,\n" +
+            "COUNT(CASE WHEN chamado.status = 'ARQUIVADO' THEN 1 END) AS Arquivado,\n" +
+            "COUNT(chamado.status) AS Total\n" +
+            "FROM  chamado\n" +
+            "JOIN funcionario ON chamado.id_funcionario = funcionario.id_funcionario\n" +
+            "GROUP BY chamado.id_funcionario;", nativeQuery = true)
+    List<Object> qtdChamadosPorFuncionario();
+
 }

@@ -26,6 +26,12 @@ public class ChamadoController {
         return chamados;
     }
 
+    @GetMapping("/chamados/chamadosPorFunc")
+    public List<Object> buscarQtdChamadosPorFuncionario() {
+        List<Object> chamados = chamadoService.buscarQtdChamadosPorFuncionario();
+        return chamados;
+    }
+
     @GetMapping("/chamados/{idChamado}")
     public ResponseEntity<Chamado> buscarUmChamado(@PathVariable Integer idChamado){
         Chamado chamado  = chamadoService.mostrarUmChamado(idChamado);
