@@ -51,6 +51,10 @@ public class ChamadoService {
         return chamadoRepository.findByStatusQuitado();
     }
 
+    public List<Object> buscarQtdChamadosPorFuncionario() {
+        return chamadoRepository.qtdChamadosPorFuncionario();
+    }
+
     public List<Chamado> buscarChamadosPeloPagamentoStatusLancado(){
         return chamadoRepository.findByStatusLancado();
     }
