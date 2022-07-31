@@ -6,13 +6,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class AuthUserDetail implements UserDetails {
+public class UserSecurityDetail implements UserDetails {
     private String login;
     private String password;
 
     private boolean enabled;
 
-    public AuthUserDetail(String login, String password, boolean enabled) {
+    public UserSecurityDetail(String login, String password, boolean enabled) {
         this.login = login;
         this.password = password;
         this.enabled = enabled;

@@ -3,7 +3,7 @@ package com.soulcode.Servicos.Services;
 import com.soulcode.Servicos.Models.User;
 import com.soulcode.Servicos.Repositories.UserRepository;
 import com.soulcode.Servicos.Services.Exceptions.EntityNotFoundException;
-import com.soulcode.Servicos.Util.JWTUtils;
+import com.soulcode.Servicos.Util.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +16,7 @@ public class UserService {
     private UserRepository userRepository;
 
     @Autowired
-    private JWTUtils jwtUtils;
+    private TokenUtils jwtUtils;
 
     public List<User> listar() {
         return userRepository.findAll();
