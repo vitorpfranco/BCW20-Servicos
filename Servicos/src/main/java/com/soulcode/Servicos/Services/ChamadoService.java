@@ -59,6 +59,10 @@ public class ChamadoService {
         return chamadoRepository.findByStatusLancado();
     }
 
+    public List<Object> buscarTotalClientePago(String nome){
+        return chamadoRepository.totalPagoPorCliente(nome);
+    }
+
     public List<Object> buscarQtdChamadosPorStatus(){
         return chamadoRepository.qtdChamadosPorStatus();
     }

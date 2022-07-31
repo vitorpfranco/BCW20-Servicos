@@ -32,11 +32,16 @@ public class ChamadoController {
         return chamados;
     }
 
+    @GetMapping("/chamados/totalPagoCliente")
+    public List<Object> buscarTotalClientePago(@RequestParam("nome") String nome){
+        List<Object> totalPagamento = chamadoService.buscarTotalClientePago(nome);
+        return totalPagamento;
+    }
+
     @GetMapping("/chamados/{idChamado}")
     public ResponseEntity<Chamado> buscarUmChamado(@PathVariable Integer idChamado){
         Chamado chamado  = chamadoService.mostrarUmChamado(idChamado);
         return ResponseEntity.ok().body(chamado);
-
     }
 
     @GetMapping("/chamadosPeloCliente/{idCliente}")
