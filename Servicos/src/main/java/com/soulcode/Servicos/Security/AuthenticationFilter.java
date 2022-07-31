@@ -2,7 +2,7 @@ package com.soulcode.Servicos.Security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.soulcode.Servicos.Models.User;
-import com.soulcode.Servicos.Util.JWTUtils;
+import com.soulcode.Servicos.Util.TokenUtils;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,11 +17,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private AuthenticationManager authenticationManager;
-    private JWTUtils jwtUtils;
+    private TokenUtils jwtUtils;
 
-    public JWTAuthenticationFilter(AuthenticationManager manager, JWTUtils jwtUtils) {
+    public AuthenticationFilter(AuthenticationManager manager, TokenUtils jwtUtils) {
         this.authenticationManager = manager;
         this.jwtUtils = jwtUtils;
     }
@@ -44,7 +44,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        AuthUserDetail user = (AuthUserDetail) authResult.getPrincipal();
+        UserSecurityDetail user = (UserSecurityDetail) authResult.getPrincipal();
         String token = jwtUtils.generateToken(user.getUsername());
 
         response.setHeader("Access-Control-Allow-Origin", "*");
