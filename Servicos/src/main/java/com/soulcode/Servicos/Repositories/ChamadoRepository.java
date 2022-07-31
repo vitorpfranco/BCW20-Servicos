@@ -49,4 +49,9 @@ public interface ChamadoRepository extends JpaRepository<Chamado,Integer> {
             "GROUP BY chamado.id_funcionario;", nativeQuery = true)
     List<Object> qtdChamadosPorFuncionario();
 
+    @Query(value = "SELECT cliente.nome, SUM(pagamento.valor)\n" +
+            "FROM chamado JOIN cliente ON chamado.id_cliente = cliente.id_cliente\n" +
+            "JOIN pagamento ON chamado.id_pagamento = pagamento.id_pagamento\n" +
+            "WHERE chamado.status = 'CONCLUIDO' AND cliente.nome = :nome", nativeQuery = true)
+    List<Object> totalPagoPorCliente(String nome);
 }
