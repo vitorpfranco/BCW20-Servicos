@@ -32,16 +32,15 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
 
-    @PatchMapping("/usuarios/alterarsenha/{login}")
-    public ResponseEntity<User> alterarSenha(@PathVariable String login,
-                                             @RequestParam("password") String password,
+    @PutMapping("/usuarios")
+    public ResponseEntity<User> alterarSenha(@RequestBody User usuario,
                                              @RequestHeader("Authorization") String headers){
-        String senhaCodificada = passwordEncoder.encode(password);
-        userService.alterarSenha(senhaCodificada, login, headers);
+        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+        userService.alterarSenha(usuario, headers);
         return ResponseEntity.ok().build();
     }
 
-    @PatchMapping("usuarios/desabilitar/{login}")
+    @DeleteMapping("usuarios/desabilitar/{login}")
     public ResponseEntity<User> desabilitarUsuario(@PathVariable String login,
                                                    @RequestHeader ("Authorization") String headers) {
         userService.desabilitarUsuario(login, headers);

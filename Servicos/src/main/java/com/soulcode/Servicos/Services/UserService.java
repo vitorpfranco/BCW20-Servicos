@@ -26,14 +26,14 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User alterarSenha(String password, String login, String headers) {
+    public User alterarSenha(User usuario, String headers) {
 
         if (headers != null && headers.startsWith("Bearer")) {
             String email = jwtUtils.getLogin(headers.substring(7));
-            Optional<User> user = userRepository.findByLogin(login);
+            Optional<User> user = userRepository.findByLogin(usuario.getLogin());
 
             if(email.equals(user.get().getLogin())) {
-                user.get().setPassword(password);
+                user.get().setPassword(usuario.getPassword());
                 return userRepository.save(user.get());
             }
         }
