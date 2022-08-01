@@ -26,13 +26,13 @@ public class ChamadoController {
         return chamados;
     }
 
-    @GetMapping("/chamados/chamadosPorFunc")
+    @GetMapping("/chamados/chamados-por-func")
     public List<Object> buscarQtdChamadosPorFuncionario() {
         List<Object> chamados = chamadoService.buscarQtdChamadosPorFuncionario();
         return chamados;
     }
 
-    @GetMapping("/chamados/totalPagoCliente")
+    @GetMapping("/chamados/total-pago-cliente")
     public List<Object> buscarTotalClientePago(@RequestParam("nome") String nome){
         List<Object> totalPagamento = chamadoService.buscarTotalClientePago(nome);
         return totalPagamento;
@@ -44,44 +44,44 @@ public class ChamadoController {
         return ResponseEntity.ok().body(chamado);
     }
 
-    @GetMapping("/chamadosPeloCliente/{idCliente}")
+    @GetMapping("/chamados/pelo-cliente/{idCliente}")
     public List<Chamado> buscarChamadosPeloCliente(@PathVariable Integer idCliente){
         List<Chamado> chamados = chamadoService.buscarChamadosPeloCliente(idCliente);
         return chamados;
     }
 
-    @GetMapping("/chamadosPeloFuncionario/{idFuncionario}")
+    @GetMapping("/chamados/pelo-funcionario/{idFuncionario}")
     public List<Chamado> buscarChamadosPeloFuncionario(@PathVariable Integer idFuncionario){
         List<Chamado> chamados = chamadoService.buscarChamadosPeloFuncionario(idFuncionario);
         return chamados;
     }
 
-    @GetMapping("/chamadosPeloStatus")
+    @GetMapping("/chamados/pelo-status")
     public List<Chamado> buscarChamadosPeloStatus(@RequestParam("status") String status){
         List<Chamado> chamados = chamadoService.buscarChamadosPeloStatus(status);
         return chamados;
     }
 
-    @GetMapping("/chamadosPorIntervaloData")
+    @GetMapping("/chamados/por-intervalo-data")
     public List<Chamado> buscarPorIntervaloData(@RequestParam("data1") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data1,
                                                 @RequestParam("data2") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data2){
         List<Chamado> chamados = chamadoService.buscarPorIntervaloData(data1,data2);
         return chamados;
     }
 
-    @GetMapping("/chamados/qtdPorStatus")
+    @GetMapping("/chamados/qtd-por-status")
     public List<Object> buscarQtdChamadosPorStatus(){
         List<Object> chamados = chamadoService.buscarQtdChamadosPorStatus();
         return chamados;
     }
 
-    @GetMapping("/chamadosPagamentoQuitado")
+    @GetMapping("/chamados/pagamento-quitado")
     public List<Chamado> buscarChamadosPeloPagamentoStatusQuitado(){
         List<Chamado> chamados = chamadoService.buscarChamadosPeloPagamentoStatusQuitado();
         return chamados;
     }
 
-    @GetMapping("/chamadosPagamentoLancado")
+    @GetMapping("/chamados/pagamento-lancado")
     public List<Chamado> buscarChamadosPeloPagamentoStatusLancado(){
         List<Chamado> chamados = chamadoService.buscarChamadosPeloPagamentoStatusLancado();
         return chamados;
@@ -110,14 +110,14 @@ public class ChamadoController {
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/chamadosAtribuirFuncionario/{idChamado}/{idFuncionario}")
+    @PutMapping("/chamados/atribuir-funcionario/{idChamado}/{idFuncionario}")
     public ResponseEntity<Chamado> atribuirFuncionario(@PathVariable Integer idChamado,
                                                        @PathVariable Integer idFuncionario){
         chamadoService.atribuirFuncionario(idChamado, idFuncionario);
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/chamadosModificarStatus/{idChamado}")
+    @PutMapping("/chamados/modificar-status/{idChamado}")
     public ResponseEntity<Chamado> modificarStatus(@PathVariable Integer idChamado,
                                                    @RequestParam("status") String status){
         chamadoService.modificarStatus(idChamado,status);
