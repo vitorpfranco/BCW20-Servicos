@@ -42,26 +42,26 @@ public class FuncionarioController {
         return ResponseEntity.ok().body(funcionario);
     }
 
-    @GetMapping("/funcionarios/qtdPagamento")
+    @GetMapping("/funcionarios/qtd-pagamento")
     public List<Object> mostrarTotalPagamentoFuncionario(@RequestParam("nome") String nome){
         List<Object> totalPagamento = funcionarioService.mostrarTotalPagamentoFuncionario(nome);
                return totalPagamento;
     }
 
 
-    @GetMapping("/funcionarios/porCargo/{idCargo}")
+    @GetMapping("/funcionarios/por-cargo/{idCargo}")
     public List<Object> mostrarFuncionariosPorCargo(@PathVariable Integer idCargo){
         List<Object> funcionarios = funcionarioService.mostrarFuncionariosPorCargo(idCargo);
         return funcionarios;
     }
 
-    @GetMapping("/funcionariosEmail/{email}")
+    @GetMapping("/funcionarios/email/{email}")
     public ResponseEntity<Funcionario> mostrarUmFuncionarioPeloEmail(@PathVariable String email){
         Funcionario funcionario = funcionarioService.mostrarUmFuncionarioPeloEmail(email);
         return ResponseEntity.ok().body(funcionario);
     }
 
-    @GetMapping("funcionariosDoCargo/{idCargo}")
+    @GetMapping("funcionarios/do-cargo/{idCargo}")
     public List<Funcionario> mostrarTodosFuncionariosDeUmCargo(@PathVariable Integer idCargo){
         List<Funcionario> funcionarios = funcionarioService.mostrarTodosFuncionariosDeUmCargo(idCargo);
         return funcionarios;
