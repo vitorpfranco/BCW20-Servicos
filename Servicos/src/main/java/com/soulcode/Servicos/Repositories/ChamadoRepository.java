@@ -34,10 +34,13 @@ public interface ChamadoRepository extends JpaRepository<Chamado,Integer> {
     @Query(value="SELECT * FROM chamado WHERE data_entrada BETWEEN :data1 AND :data2", nativeQuery = true)
     List<Chamado> findByIntervaloData(Date data1, Date data2);
 
-    @Query(value = "SELECT status, COUNT(status)\n" +
-            "FROM  chamado\n" +
-            "GROUP BY status", nativeQuery = true)
-    List<Object> qtdChamadosPorStatus();
+    @Query(value = "SELECT \n" +
+            "COUNT(CASE WHEN chamado.status = 'RECEBIDO' THEN 1 END) AS Recebido,\n" +
+            "COUNT(CASE WHEN chamado.status = 'ATRIBUIDO' THEN 1 END) AS Atribuido,\n" +
+            "COUNT(CASE WHEN chamado.status = 'CONCLUIDO' THEN 1 END) AS Concluido,\n" +
+            "COUNT(CASE WHEN chamado.status = 'ARQUIVADO' THEN 1 END) AS Arquivado\n" +
+            "FROM  chamado", nativeQuery = true)
+    Object qtdChamadosPorStatus();
 
     @Query(value = "SELECT funcionario.nome,\n" +
             "COUNT(CASE WHEN chamado.status = 'ATRIBUIDO' THEN 1 END) AS Atribuido,\n" +

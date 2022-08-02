@@ -70,8 +70,8 @@ public class ChamadoController {
     }
 
     @GetMapping("/chamados/qtd-por-status")
-    public List<Object> buscarQtdChamadosPorStatus(){
-        List<Object> chamados = chamadoService.buscarQtdChamadosPorStatus();
+    public Object buscarQtdChamadosPorStatus(){
+        Object chamados = chamadoService.buscarQtdChamadosPorStatus();
         return chamados;
     }
 

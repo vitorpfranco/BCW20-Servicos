@@ -63,7 +63,7 @@ public class ChamadoService {
         return chamadoRepository.totalPagoPorCliente(nome);
     }
 
-    public List<Object> buscarQtdChamadosPorStatus(){
+    public Object buscarQtdChamadosPorStatus(){
         return chamadoRepository.qtdChamadosPorStatus();
     }
 
